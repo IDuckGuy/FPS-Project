@@ -21,7 +21,7 @@ public class Bullet : MonoBehaviour
         {
             var target = other.GetComponent<Target>();
 
-            if (target != null) target.TakeDamage(0, isInstaKill: true);
+            if (target != null) target.TakeDamage(0, instaKill: true);
         }
         // Enemy
         if(other.CompareTag("Damageable"))

@@ -4,26 +4,30 @@ using UnityEngine;
 
 public class Target : MonoBehaviour
 {
-    //gives the enemy health
-    public float health, startingHealth = 50f;
+    public float health = 50f;
+    GameObject enemySpawnObject;
 
-    public void TakeDamage(float amount, bool isInstaKill=false)
+    private void start()
     {
-        //game object gets destroyed if taken damage
-        health -= amount;
-        if (health <= 0 || isInstaKill)
-        {
-            //Invoke("Respawn", 2f);
+        enemySpawnObject = GameObject.Find("Spawner");
+    }
+    public void TakeDamage(float amount, bool instaKill = true)
+    {
+        health-= amount;
 
-            //GetComponent<MeshRenderer>().enabled = false;
-            Destroy(gameObject);
-            Gamemanager.score+=25; //adds 25 to score
+        if (instaKill) health = 0;
+
+        if(health <= 0f)
+        {
+            TargetDie();
         }
     }
-    private void Respawn()
-    {
-        GetComponent<MeshRenderer>().enabled = true;
 
-        health = startingHealth;
+    void TargetDie()
+    {
+        // enemySpawnObject.GetComponent<EnemySpawn>().numberOfEnemies--;
+        EnemySpawn.Instance.numberOfEnemies--;
+        Destroy(gameObject);
     }
 }
+

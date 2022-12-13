@@ -16,6 +16,11 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    // On trigger
+    void OnTriggerEnter(Collider owother) {
+        //  Whens we teaching the healthz, add health uwu
+        if (owother.CompareTag("Health Item"))  playerHealth += 20; // healths awooooo~
+    }
     void GameOver()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
