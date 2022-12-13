@@ -1,46 +1,50 @@
-using System.Collections;
-using System.Collections.Generic;
+/*
+    * Basic enemy script which spawns enemies in waves
+    * Code by Az Foxxo (https://github.com/AzFoxxo/Scripts)
+    * Anarchist License, MIT Licence, GNU GPL v3.0 Licence, or any later version.
+*/
+
 using UnityEngine;
 
 public class EnemySpawn : MonoBehaviour
 {
-    [SerializeField] private GameObject enemyObject;
-    private GameObject[] spawnPoints;
-    public float numberOfEnemies, maxEnemies;
+    [SerializeField] private GameObject enemy;
+    [SerializeField] private ulong enemyMax;
+    [SerializeField] private ulong increaseMaxPerWave;
+    private ulong enemyCount = 0;
+    private GameObject[] spawnLocations;
 
-    public static EnemySpawn Instance;
 
-    // Start is called before the first frame update
-    void Start()
+    // Find all spawn points present in the world
+    private void Awake() => spawnLocations = GameObject.FindGameObjectsWithTag("SpawnPoint");
+
+    // Spawn
+    void Update() => Spawn();
+
+    // Spawn method
+    private void Spawn()
     {
-        Instance = this;
-        spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
-        InvokeRepeating("SpawnEnemies", 0.5f, 2f);
-    }
+        // Calculate the number of enemies
+        enemyCount = (ulong)GameObject.FindGameObjectsWithTag("EnemyUwU").Length;
 
-    // Update is called once per frame
+        // If the wave if not over, return
+        if (enemyCount != 0) return;
 
-    void SpawnEnemies()
-    {
-        while (numberOfEnemies < maxEnemies) {
+        // Increase max enemies every wave
+        enemyMax += increaseMaxPerWave;
+
+        while (enemyCount < enemyMax) {
             // Randomly choose a spawn location
-            int loc = Random.Range(0, spawnPoints.Length);
+            int loc = Random.Range(0, spawnLocations.Length);
 
             // Spawn a new enemy
-            Instantiate(enemyObject, spawnPoints[loc].transform.position, spawnPoints[loc].transform.rotation);
+            Instantiate(enemy, spawnLocations[loc].transform.position, spawnLocations[loc].transform.rotation);
 
             // Increase count
-            numberOfEnemies++;
+            enemyCount++;
             
-            print($"Created {spawnPoints[loc].transform.position} at {spawnPoints[loc].transform.rotation}!");
-            print(spawnPoints.Length);
+            print($"Created {spawnLocations[loc].transform.position} at {spawnLocations[loc].transform.rotation}!");
+            print(spawnLocations.Length);
         }
-
     }
-
-
-
-
-
-
 }

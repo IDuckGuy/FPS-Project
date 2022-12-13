@@ -26,7 +26,7 @@ public class Target : MonoBehaviour
     void TargetDie()
     {
         // enemySpawnObject.GetComponent<EnemySpawn>().numberOfEnemies--;
-        EnemySpawn.Instance.numberOfEnemies--;
+        // EnemySpawn.Instance.numberOfEnemies--;
         Destroy(gameObject);
     }
 }
