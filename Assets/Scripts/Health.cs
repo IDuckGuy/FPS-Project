@@ -10,6 +10,7 @@ public class Health : MonoBehaviour
         //0 hp enemy destroys
         if(health <= 0)
         {
+            EnemySpawn.Instance.enemyCount--;
             GameObject.Destroy(gameObject);
         }
     }

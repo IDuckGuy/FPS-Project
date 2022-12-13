@@ -10,6 +10,7 @@ TagManager:
   - Health Item
   - Ammo Item
   - SpawnPoint
+  - EnemyUwU
   layers:
   - Default
   - TransparentFX

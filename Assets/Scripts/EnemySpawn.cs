@@ -11,21 +11,26 @@ public class EnemySpawn : MonoBehaviour
     [SerializeField] private GameObject enemy;
     [SerializeField] private ulong enemyMax;
     [SerializeField] private ulong increaseMaxPerWave;
-    private ulong enemyCount = 0;
+    [SerializeField] public ulong enemyCount = 0;
     private GameObject[] spawnLocations;
 
+    [HideInInspector] public static EnemySpawn Instance;
 
     // Find all spawn points present in the world
-    private void Awake() => spawnLocations = GameObject.FindGameObjectsWithTag("SpawnPoint");
+    private void Start() => spawnLocations = GameObject.FindGameObjectsWithTag("SpawnPoint");
 
     // Spawn
     void Update() => Spawn();
+
+
+    // Instance
+    void Awake() => Instance = this;
 
     // Spawn method
     private void Spawn()
     {
         // Calculate the number of enemies
-        enemyCount = (ulong)GameObject.FindGameObjectsWithTag("EnemyUwU").Length;
+        // enemyCount = (ulong)GameObject.FindGameObjectsWithTag("EnemyUwU").Length;
 
         // If the wave if not over, return
         if (enemyCount != 0) return;
